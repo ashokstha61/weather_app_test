@@ -1,15 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_weather/api/api.dart';
+import 'package:flutter_weather/api/models/dailyWeather.dart';
 import 'package:flutter_weather/helper/extensions.dart';
-import 'package:flutter_weather/provider/weatherProvider.dart';
-import 'package:flutter_weather/theme/colors.dart';
+
+import 'package:flutter_weather/theme/constants.dart';
+
 import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../helper/utils.dart';
-import '../models/dailyWeather.dart';
-import '../theme/textStyle.dart';
+
+
 
 class SevenDayForecastDetail extends StatefulWidget {
   static const routeName = '/sevenDayForecast';
@@ -58,7 +61,7 @@ class _SevenDayForecastDetailState extends State<SevenDayForecastDetail> {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: Consumer<WeatherProvider>(
+      body: Consumer<Api>(
         builder: (context, weatherProv, _) {
           DailyWeather _selectedWeather =
               weatherProv.dailyWeather[_selectedIndex];

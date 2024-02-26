@@ -1,14 +1,14 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:flutter/material.dart';
+import 'package:flutter_weather/api/api.dart';
 import 'package:flutter_weather/screens/locationError.dart';
+import 'package:flutter_weather/theme/constants.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/weatherProvider.dart';
-import '../theme/colors.dart';
-import '../theme/textStyle.dart';
+
 import '../widgets/WeatherInfoHeader.dart';
 import '../widgets/mainWeatherDetail.dart';
 import '../widgets/mainWeatherInfo.dart';
@@ -34,14 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> requestWeather() async {
-    await Provider.of<WeatherProvider>(context, listen: false)
+    await Provider.of<Api>(context, listen: false)
         .getWeatherData(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<WeatherProvider>(
+      body: Consumer<Api>(
         builder: (context, weatherProv, _) {
           if (!weatherProv.isLoading && !weatherProv.isLocationserviceEnabled)
             return LocationServiceErrorDisplay();
@@ -127,7 +127,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
       onQueryChanged: (query) {},
       onSubmitted: (query) async {
         widget.fsc.close();
-        await Provider.of<WeatherProvider>(context, listen: false)
+        await Provider.of<Api>(context, listen: false)
             .searchWeather(query);
       },
       transition: CircularFloatingSearchBarTransition(),
@@ -172,7 +172,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                   onTap: () async {
                     widget.fsc.query = data;
                     widget.fsc.close();
-                    await Provider.of<WeatherProvider>(context, listen: false)
+                    await Provider.of<Api>(context, listen: false)
                         .searchWeather(data);
                   },
                   child: Container(

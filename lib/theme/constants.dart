@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+const Color primaryBlue = Color(0xff81BCF7);
+const Color backgroundBlue = Color(0xffCAE5FF);
+const Color backgroundWhite = Color(0xffF2F8FF);
+String apiKey = '672ecfe59fe88c091b809d6aac82f1f0';
 TextStyle lightText = GoogleFonts.openSans(
   fontSize: 12,
   fontWeight: FontWeight.w300,

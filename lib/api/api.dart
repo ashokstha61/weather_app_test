@@ -1,18 +1,19 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_weather/models/additionalWeatherData.dart';
-import 'package:flutter_weather/models/geocode.dart';
+import 'package:flutter_weather/api/models/additionalWeatherData.dart';
+import 'package:flutter_weather/api/models/dailyWeather.dart';
+import 'package:flutter_weather/api/models/geocode.dart';
+import 'package:flutter_weather/api/models/hourlyWeather.dart';
+import 'package:flutter_weather/api/models/weather.dart';
+import 'package:flutter_weather/theme/constants.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as  http;
 import 'package:latlong2/latlong.dart';
 
-import '../models/dailyWeather.dart';
-import '../models/hourlyWeather.dart';
-import '../models/weather.dart';
-
-class WeatherProvider with ChangeNotifier {
-  String apiKey = 'Enter Your API Key';
+class Api with ChangeNotifier{
   late Weather weather;
   late AdditionalWeatherData additionalWeatherData;
   LatLng? currentLocation;
@@ -64,7 +65,6 @@ class WeatherProvider with ChangeNotifier {
 
     return await Geolocator.getCurrentPosition();
   }
-
   Future<void> getWeatherData(
     BuildContext context, {
     bool notify = false,
@@ -84,7 +84,7 @@ class WeatherProvider with ChangeNotifier {
 
     try {
       currentLocation = LatLng(locData.latitude, locData.longitude);
-      await getCurrentWeather(currentLocation!);
+      // await getCurrentWeather(currentLocation!);
       await getDailyWeather(currentLocation!);
     } catch (e) {
       print(e);
@@ -94,23 +94,17 @@ class WeatherProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-
   Future<void> getCurrentWeather(LatLng location) async {
-    Uri url = Uri.parse(
-      'https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&units=metric&appid=$apiKey',
-    );
-    try {
-      final response = await http.get(url);
-      final extractedData = json.decode(response.body) as Map<String, dynamic>;
-      weather = Weather.fromJson(extractedData);
-      print('Fetched Weather for: ${weather.city}/${weather.countryCode}');
-    } catch (error) {
-      print(error);
-      isLoading = false;
-      this.isRequestError = true;
+    Dio dio = Dio();
+    var res = await dio.get(
+        'https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&units=metric&appid=$apiKey');
+    if (res.statusCode == 200) {
+      var model = getCurrentWeather.;
+      return model;
+    } else {
+      return null;
     }
   }
-
   Future<void> getDailyWeather(LatLng location) async {
     isLoading = true;
     notifyListeners();
@@ -137,13 +131,12 @@ class WeatherProvider with ChangeNotifier {
       this.isRequestError = true;
     }
   }
-
   Future<GeocodeData?> locationToLatLng(String location) async {
     try {
       Uri url = Uri.parse(
         'http://api.openweathermap.org/geo/1.0/direct?q=$location&limit=5&appid=$apiKey',
       );
-      final http.Response response = await http.get(url);
+      final  response = await http.get(url);
       if (response.statusCode != 200) return null;
       return GeocodeData.fromJson(
         jsonDecode(response.body)[0] as Map<String, dynamic>,
@@ -153,7 +146,6 @@ class WeatherProvider with ChangeNotifier {
       return null;
     }
   }
-
   Future<void> searchWeather(String location) async {
     isLoading = true;
     notifyListeners();
@@ -165,8 +157,6 @@ class WeatherProvider with ChangeNotifier {
       if (geocodeData == null) throw Exception('Unable to Find Location');
       await getCurrentWeather(geocodeData.latLng);
       await getDailyWeather(geocodeData.latLng);
-      // replace location name with data from geocode
-      // because data from certain lat long might return local area name
       weather.city = geocodeData.name;
     } catch (e) {
       print(e);
@@ -176,7 +166,6 @@ class WeatherProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-
   void switchTempUnit() {
     isCelsius = !isCelsius;
     notifyListeners();

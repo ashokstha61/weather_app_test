@@ -1,20 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_weather/api/api.dart';
 import 'package:flutter_weather/helper/extensions.dart';
-import 'package:flutter_weather/theme/textStyle.dart';
+import 'package:flutter_weather/theme/constants.dart';
+
 import 'package:flutter_weather/widgets/customShimmer.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter_weather/provider/weatherProvider.dart';
-import 'package:flutter_weather/theme/colors.dart';
+
 
 import '../helper/utils.dart';
 
 class MainWeatherDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<WeatherProvider>(builder: (context, weatherProv, _) {
+    return Consumer<Api>(builder: (context, weatherProv, _) {
       if (weatherProv.isLoading) {
         return CustomShimmer(
           height: 132.0,
@@ -42,8 +43,8 @@ class MainWeatherDetail extends StatelessWidget {
                         ),
                         title: 'Feels Like',
                         data: weatherProv.isCelsius
-                            ? '${weatherProv.weather.feelsLike.toStringAsFixed(1)}°'
-                            : '${weatherProv.weather.feelsLike.toFahrenheit().toStringAsFixed(1)}°'),
+                            ? '${weatherProv.weather.feelsLike?.toStringAsFixed(1)}°'
+                            : '${weatherProv.weather.feelsLike?.toFahrenheit().toStringAsFixed(1)}°'),
                     VerticalDivider(
                       thickness: 1.0,
                       indent: 4.0,

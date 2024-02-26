@@ -1,19 +1,20 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_weather/theme/colors.dart';
+import 'package:flutter_weather/api/api.dart';
+import 'package:flutter_weather/theme/constants.dart';
+
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/weatherProvider.dart';
-import '../theme/textStyle.dart';
+
 
 class LocationPermissionErrorDisplay extends StatelessWidget {
   const LocationPermissionErrorDisplay({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<WeatherProvider>(builder: (context, weatherProv, _) {
+    return Consumer<Api>(builder: (context, weatherProv, _) {
       return Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
@@ -123,7 +124,7 @@ class _LocationServiceErrorDisplayState
     serviceStatusStream.onData((ServiceStatus status) {
       if (status == ServiceStatus.enabled) {
         print('enabled');
-        Provider.of<WeatherProvider>(context, listen: false)
+        Provider.of<Api>(context, listen: false)
             .getWeatherData(context);
       }
     });
@@ -166,7 +167,7 @@ class _LocationServiceErrorDisplayState
             ),
           ),
           const SizedBox(height: 16.0),
-          Consumer<WeatherProvider>(builder: (context, weatherProv, _) {
+          Consumer<Api>(builder: (context, weatherProv, _) {
             return SizedBox(
               width: MediaQuery.sizeOf(context).width / 2,
               child: ElevatedButton(

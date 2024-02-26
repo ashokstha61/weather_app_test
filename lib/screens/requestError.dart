@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_weather/theme/colors.dart';
+import 'package:flutter_weather/api/api.dart';
+import 'package:flutter_weather/theme/constants.dart';
+
 import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/weatherProvider.dart';
-import '../theme/textStyle.dart';
+
+
 
 class RequestErrorDisplay extends StatelessWidget {
   const RequestErrorDisplay({Key? key}) : super(key: key);
@@ -40,7 +42,7 @@ class RequestErrorDisplay extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16.0),
-          Consumer<WeatherProvider>(builder: (context, weatherProv, _) {
+          Consumer<Api>(builder: (context, weatherProv, _) {
             return SizedBox(
               width: MediaQuery.sizeOf(context).width / 2,
               child: ElevatedButton(
@@ -107,7 +109,7 @@ class SearchErrorDisplay extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16.0),
-          Consumer<WeatherProvider>(builder: (context, weatherProv, _) {
+          Consumer<Api>(builder: (context, weatherProv, _) {
             return SizedBox(
               width: MediaQuery.sizeOf(context).width / 2,
               child: ElevatedButton(

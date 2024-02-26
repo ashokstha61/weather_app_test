@@ -1,8 +1,8 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_weather/provider/weatherProvider.dart';
-import 'package:flutter_weather/theme/colors.dart';
-import 'package:flutter_weather/theme/textStyle.dart';
+import 'package:flutter_weather/api/api.dart';
+import 'package:flutter_weather/theme/constants.dart';
+
 import 'package:flutter_weather/widgets/customShimmer.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +12,7 @@ class WeatherInfoHeader extends StatelessWidget {
   static const double boxHeight = 40.0;
   @override
   Widget build(BuildContext context) {
-    return Consumer<WeatherProvider>(
+    return Consumer<Api>(
       builder: (context, weatherProv, _) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,12 +32,12 @@ class WeatherInfoHeader extends StatelessWidget {
                           child: RichText(
                             textAlign: TextAlign.start,
                             text: TextSpan(
-                              text: weatherProv.weather.city + ', ',
+                              text: weatherProv.weather.city! + ', ',
                               style: semiboldText,
                               children: [
                                 TextSpan(
                                   text: Country.tryParse(
-                                          weatherProv.weather.countryCode)
+                                          weatherProv.weather.countryCode!)
                                       ?.name,
                                   style: regularText.copyWith(fontSize: 18.0),
                                 ),

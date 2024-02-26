@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_weather/api/api.dart';
 import 'package:provider/provider.dart';
-
-import './provider/weatherProvider.dart';
 import 'screens/homeScreen.dart';
 import 'screens/sevenDayForecastDetailScreen.dart';
 
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => WeatherProvider(),
+      create: (context) => Api(),
       child: MaterialApp(
         title: 'Flutter Weather',
         debugShowCheckedModeBanner: false,

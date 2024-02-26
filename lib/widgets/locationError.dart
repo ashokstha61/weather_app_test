@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather/api/api.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/weatherProvider.dart';
+
 
 class LocationError extends StatefulWidget {
   @override
@@ -49,7 +50,7 @@ class _LocationErrorState extends State<LocationError> {
             ),
             child: Text('Enable Location'),
             onPressed: () async {
-              await Provider.of<WeatherProvider>(context, listen: false)
+              await Provider.of<Api>(context, listen: false)
                   .getWeatherData(context);
             },
           ),

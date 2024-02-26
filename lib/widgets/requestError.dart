@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_weather/provider/weatherProvider.dart';
+import 'package:flutter_weather/api/api.dart';
 import 'package:provider/provider.dart';
 
 class RequestError extends StatelessWidget {
@@ -44,7 +44,7 @@ class RequestError extends StatelessWidget {
             ),
             child: Text('Return Home'),
             onPressed: () =>
-                Provider.of<WeatherProvider>(context, listen: false)
+                Provider.of<Api>(context, listen: false)
                     .getWeatherData(context, notify: true),
           ),
         ],

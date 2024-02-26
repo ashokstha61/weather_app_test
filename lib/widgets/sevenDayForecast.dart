@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather/api/api.dart';
 import 'package:flutter_weather/helper/extensions.dart';
-import 'package:flutter_weather/models/dailyWeather.dart';
-import 'package:flutter_weather/provider/weatherProvider.dart';
+import 'package:flutter_weather/api/models/dailyWeather.dart';
 import 'package:flutter_weather/screens/sevenDayForecastDetailScreen.dart';
-import 'package:flutter_weather/theme/colors.dart';
-import 'package:flutter_weather/theme/textStyle.dart';
+import 'package:flutter_weather/theme/constants.dart';
 import 'package:flutter_weather/widgets/customShimmer.dart';
 import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -32,7 +31,7 @@ class SevenDayForecast extends StatelessWidget {
                 ),
               ),
               Spacer(),
-              Consumer<WeatherProvider>(
+              Consumer<Api>(
                 builder: (context, weatherProv, _) {
                   return TextButton(
                     style: TextButton.styleFrom(
@@ -56,7 +55,7 @@ class SevenDayForecast extends StatelessWidget {
         ),
         const SizedBox(height: 8.0),
         Container(
-          child: Consumer<WeatherProvider>(
+          child: Consumer<Api>(
             builder: (context, weatherProv, _) {
               if (weatherProv.isLoading) {
                 return ListView.builder(

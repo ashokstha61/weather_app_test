@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather/api/api.dart';
+import 'package:flutter_weather/api/models/hourlyWeather.dart';
 import 'package:flutter_weather/helper/extensions.dart';
-import 'package:flutter_weather/models/hourlyWeather.dart';
-import 'package:flutter_weather/provider/weatherProvider.dart';
-import 'package:flutter_weather/theme/colors.dart';
-import 'package:flutter_weather/theme/textStyle.dart';
+
+import 'package:flutter_weather/theme/constants.dart';
+
 import 'package:flutter_weather/widgets/customShimmer.dart';
 import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -34,7 +35,7 @@ class TwentyFourHourForecast extends StatelessWidget {
               ],
             ),
           ),
-          Consumer<WeatherProvider>(
+          Consumer<Api>(
             builder: (context, weatherProv, _) {
               if (weatherProv.isLoading) {
                 return SizedBox(
@@ -90,7 +91,7 @@ class HourlyWeatherWidget extends StatelessWidget {
       width: 124.0,
       child: Column(
         children: [
-          Consumer<WeatherProvider>(builder: (context, weatherProv, _) {
+          Consumer<Api>(builder: (context, weatherProv, _) {
             return Text(
               weatherProv.isCelsius
                   ? '${data.temp.toStringAsFixed(1)}°'

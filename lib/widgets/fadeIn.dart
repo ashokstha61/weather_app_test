@@ -6,13 +6,11 @@ class FadeIn extends StatefulWidget {
   /// Fade-in controller
   final FadeInController? controller;
 
-  /// Child widget to fade-in
   final Widget? child;
 
-  /// Duration of fade-in. Defaults to 250ms
+  
   final Duration duration;
 
-  /// Fade-in curve. Defaults to [Curves.easeIn]
   final Curve curve;
 
   const FadeIn({
@@ -32,27 +30,27 @@ enum FadeInAction {
   fadeOut,
 }
 
-/// Fade-in controller which dispatches fade-in/fade-out actions
+
 class FadeInController {
   final _streamController = StreamController<FadeInAction>();
 
-  /// Automatically starts the initial fade-in. Defaults to false
+
   final bool autoStart;
 
   FadeInController({this.autoStart = false});
 
   void dispose() => _streamController.close();
 
-  /// Fades-in child
+  
   void fadeIn() => run(FadeInAction.fadeIn);
 
-  /// Fades-out child
+
   void fadeOut() => run(FadeInAction.fadeOut);
 
-  /// Dispatches a [FadeInAction]
+ 
   void run(FadeInAction action) => _streamController.add(action);
 
-  /// Stream of [FadeInAction]s dispatched by this controller
+
   Stream<FadeInAction> get stream => _streamController.stream;
 }
 
@@ -141,9 +139,7 @@ class _FadeInState extends State<FadeIn> with TickerProviderStateMixin {
     );
   }
 
-  /// Fades-in child
-  void fadeIn() => _controller.forward();
 
-  /// Fades-out child
+  void fadeIn() => _controller.forward();
   void fadeOut() => _controller.reverse();
 }
